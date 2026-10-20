@@ -29,4 +29,31 @@ const registerValidators = [
 ]
 
 
-export default registerValidators
+const loginValidator = [
+    body('email')
+        .exists().withMessage("email is required")
+        .isString().withMessage("email must be string")
+        .trim()
+        .bail()
+        .isEmail().withMessage("plz enter a valid email"),
+    body("password")
+        .exists().withMessage("password is required").bail()
+        .isString().withMessage("password must be string")
+        .trim()
+        .isLength({min:6}).withMessage("password must be atleast 6 letters"),
+        (req,res,next)=>{
+            const errors = validationResult(req)
+            if(!errors.isEmpty()){
+            return res.status(400).json({
+                message:"invalid request",
+                errors:errors.array()
+            })
+        }
+        next()
+
+
+        }
+]
+
+
+export {registerValidators,loginValidator} 
