@@ -1,4 +1,4 @@
-import { readAccessToken } from "../src/utils/auth.util"
+import { readAccessToken } from "../utils/auth.util"
 
 export function authenticate(req,res){
     const accessToken = req.header.Authorization?.split(" ")[1]
