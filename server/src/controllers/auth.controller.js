@@ -133,7 +133,7 @@ export const loginController = async(req,res)=>{
 /** token refresh karega bhai */
 export const refreshController = async(req,res)=>{
     //cheak refresh token exits or not
-    const refreshToken = req.cookie.refreshToken
+    const refreshToken = req.cookies.refreshToken
     if(!refreshToken){
         return res.status(401).json({
             message:"refresh token is required"
@@ -168,7 +168,7 @@ export const refreshController = async(req,res)=>{
             refreshToken:newRefreshToken
         })
         //update refress token in cookie
-        res.cookie("refreshTOken",refreshToken,{
+        res.cookie("refreshToken",newRefreshToken,{
             httpOnly:true
         })
 
