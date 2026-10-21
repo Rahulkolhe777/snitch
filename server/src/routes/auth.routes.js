@@ -14,8 +14,6 @@ router.post("/register",registerValidators,registerController)
 //201 if successed else 404 not found
 router.post("/login",loginValidator,loginController)
 
-export default router;
-
 
 /**
  * post auth/api/refresh
@@ -30,3 +28,4 @@ router.post("/refresh",refreshController)
 
 router.get("/me",authenticate,getMeController)
 
+export default router;

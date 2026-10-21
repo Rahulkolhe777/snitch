@@ -30,10 +30,10 @@ const productSchema = new mongoose.Schema({
         currency:{
             type:String,
             enum:["INR","USD"],
-            defalut:"INR"
+            default:"INR"
         }
     },
-    sizes:{
+    sizes:[{
         size:{
             type:String,
             enum:["S","M","L","XL","XXL"],
@@ -45,7 +45,7 @@ const productSchema = new mongoose.Schema({
             min:0,
             default:0,
         }
-    },
+    }],
 
     seller: {
         type: mongoose.Schema.Types.ObjectId,
