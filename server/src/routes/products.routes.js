@@ -1,7 +1,7 @@
 import {Router} from "express";
 import createProductValidator from "../validators/product.validator";
 import { authenticate } from "../middleware/auth.middleware";
-import {createProductController} from "../controllers/products.controller"
+import {createProductController,getAllProductsController} from "../controllers/products.controller"
 import multer from "multer"
 
 
@@ -60,8 +60,26 @@ router.post("/",
     createProductValidator,
     createProductController)
 
-
-
+/**
+ * get 
+ * route api/products
+ * read all the products from db
+ * acess user 
+ */
+router.get("/",
+    //cheak user autharised or not
+    authenticate,
+    //cheak the role
+    async(req,res,next)=>{
+        if (req.user.role !== "buyer" && req.user.role !== "seller") {
+            return res.status(403).json({
+                Message:"invalid user please get lost sir"
+            })
+        }
+        next()
+    },
+    getAllProductsController
+)
 
 
 export default router;

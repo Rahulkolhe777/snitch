@@ -1,3 +1,4 @@
+import productModel from "../model/product.model"
 import { uploadFile } from "../storage/storage.service"
 
 
@@ -10,9 +11,31 @@ export const createProductController = async(req,res)=>{
             buffer:req.files[i].buffer,
             fileName:req.files[i].originalname
        })
-       console.log(response)
+       fileUrl.push(response.url)   
     }
+    console.log(fileUrl)
+
+    const product = await productModel.create({
+        tittle:req.body.tittle,
+        description:req.body.description,
+        images:fileUrl,
+        price:{
+            amount:req.body.price.amount,
+            currency:req.body.price.currency
+        },
+        sizes:req.body.sizes,
+        seller:req.user.userId
+    })
     res.status(200).json({
-        meessage:"dummy resposnse"
+        meessage:"products created successfully",
+        data:product
+    })
+}
+
+export const getAllProductsController = async(req,res)=>{
+    const products = await productModel.find()
+    res.status(200).json({
+        message:"products fetched successfully",
+        data:products
     })
 }
