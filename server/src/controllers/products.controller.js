@@ -94,3 +94,27 @@ export const getAllProductsController = async (req, res) => {
         });
     }
 };
+
+export const unlistProductController = async(req,res)=>{
+    try {
+        const {id} = req.params
+        const product = await productModel.findById(id)
+        if(!product){
+            return res.status(400).json({
+                message: "product is not available"
+            })
+        }
+
+        product.published = false
+        await product.save()
+
+        return res.status(200).json({
+            message: "product unlisted successfully",
+            data: product,
+        });
+        
+        
+    } catch (error) {
+        
+    }
+}

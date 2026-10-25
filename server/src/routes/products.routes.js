@@ -1,7 +1,7 @@
 import {Router} from "express";
-import createProductValidator from "../validators/product.validator";
-import { authenticate } from "../middleware/auth.middleware";
-import {createProductController,getAllProductsController} from "../controllers/products.controller"
+import createProductValidator, { unlistProductValidator } from "../validators/product.validator";
+import authenticateUser, { authenticate, authenticateseller } from "../middleware/auth.middleware";
+import {createProductController,getAllProductsController, unlistProductController} from "../controllers/products.controller"
 import multer from "multer"
 
 
@@ -25,14 +25,7 @@ router.post("/",
     //cheak user autharised or not
     authenticate,
     //cheak the role
-    async(req,res,next)=>{
-        if (req.user.role !== "seller") {
-            return res.status(403).json({
-                Message:"invalid seller please get lost sir"
-            })
-        }
-        next()
-    },
+    authenticateseller,
     //require fore reading form data
     upload.array("images"),
     //parse the prices and sizes 
@@ -70,16 +63,17 @@ router.get("/",
     //cheak user autharised or not
     authenticate,
     //cheak the role
-    async(req,res,next)=>{
-        if (req.user.role !== "buyer" && req.user.role !== "seller") {
-            return res.status(403).json({
-                Message:"invalid user please get lost sir"
-            })
-        }
-        next()
-    },
+    authenticateUser
+    ,
     getAllProductsController
 )
 
+/**
+ * patch
+ * route api/products/unlist/:id
+ * unlist the product
+ * acess user 
+*/
+router.patch("api/products/unlist/:id",authenticate,authenticateseller,unlistProductValidator,unlistProductController)
 
 export default router;

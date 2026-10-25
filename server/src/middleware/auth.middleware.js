@@ -19,3 +19,23 @@ export function authenticate(req, res, next) {
         });
     }
 }
+
+
+export function authenticateseller(req,res,next){
+    if (req.user.role !== "seller") {
+        return res.status(403).json({
+            Message:"invalid seller please get lost sir"
+        })
+    }
+    next()
+}
+
+
+export default function authenticateUser(req,res,next){
+    if (req.user.role !== "buyer" && req.user.role !== "seller") {
+        return res.status(403).json({
+            Message:"invalid user please get lost sir"
+        })
+    }
+    next()
+}

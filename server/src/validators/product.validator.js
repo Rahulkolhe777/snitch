@@ -52,5 +52,21 @@ const createProductValidator = [
     }
 ]
 
+const unlistProductValidator = [
+    param("id")
+    .exists().withMessage("product id is required")
+    .isMongoId().withMessage("product id must be a valid mongo id"),
+    (req,res,next)=>{
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                message: "invalid request",
+                errors: errors.array()
+            })
+        }
+        next()
+    }
+]
 
-export default createProductValidator 
+
+export  {createProductValidator,unlistProductValidator} 

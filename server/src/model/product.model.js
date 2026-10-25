@@ -52,6 +52,10 @@ const productSchema = new mongoose.Schema({
         ref: "users",
         required: true,
     },
+    published:{
+        type:Boolean,
+        default:false
+    }
 }, { timestamps: true });
 
 
