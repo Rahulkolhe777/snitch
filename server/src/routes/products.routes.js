@@ -1,5 +1,5 @@
 import {Router} from "express";
-import createProductValidator, { unlistProductValidator } from "../validators/product.validator";
+import { createProductValidator, unlistProductValidator } from "../validators/product.validator";
 import authenticateUser, { authenticate, authenticateseller } from "../middleware/auth.middleware";
 import {createProductController,getAllProductsController, unlistProductController} from "../controllers/products.controller"
 import multer from "multer"
@@ -59,6 +59,7 @@ router.post("/",
  * read all the products from db
  * acess user 
  */
+// The storefront is public: visitors can browse products before logging in.
 router.get("/",
     //cheak user autharised or not
     authenticate,
@@ -74,6 +75,6 @@ router.get("/",
  * unlist the product
  * acess user 
 */
-router.patch("api/products/unlist/:id",authenticate,authenticateseller,unlistProductValidator,unlistProductController)
+router.patch("/unlist/:id",authenticate,authenticateseller,unlistProductValidator,unlistProductController)
 
 export default router;

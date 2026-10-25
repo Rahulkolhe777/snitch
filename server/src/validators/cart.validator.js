@@ -1,7 +1,7 @@
 import {body,validationResult} from "express-validator"
 
 const AddToCartValidators = [
-    body("product")
+    body("productId")
         .exists().withMessage("product id is required").bail()
         .isString().withMessage("product id must be a string").bail()
         .trim()
@@ -15,7 +15,7 @@ const AddToCartValidators = [
         .isIn(["S","M","L","XL","XXL"]).withMessage("size is invalid"),
     (req,res,next)=>{
         const errors = validationResult(req)
-        if(!errors.isEmpty()){ m 
+        if(!errors.isEmpty()){
             return res.status(400).json({
                 message:"invalid request",
                 errors:errors.array()
@@ -26,4 +26,4 @@ const AddToCartValidators = [
 ]
 
 
-export default cartValidators
+export default AddToCartValidators

@@ -1,12 +1,11 @@
-import { validationResult, body } from "express-validator"
+import { validationResult, body, param } from "express-validator"
 
 const createProductValidator = [
-    body("tittle")
-        .exists().withMessage("tittle is required").bail()
-        .isString().withMessage("tittle must be a string")
+    body("title")
+        .exists().withMessage("title is required").bail()
+        .isString().withMessage("title must be a string")
         .trim()
-        .isLength({ min: 3, max: 100 }).withMessage("tittle must be between 3 to 100 characters")
-        .isAlpha("en-US",{ignore:" -"}).withMessage("tittle must contain only angrezi lettersand the spaces"),
+        .isLength({ min: 3, max: 100 }).withMessage("title must be between 3 to 100 characters"),
 
     body("description")
         .exists().withMessage("description is important bro misunderstanding ho sakti hai").bail()

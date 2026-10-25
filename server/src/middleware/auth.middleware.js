@@ -32,7 +32,7 @@ export function authenticateseller(req,res,next){
 
 
 export default function authenticateUser(req,res,next){
-    if (req.user.role !== "buyer" && req.user.role !== "seller") {
+    if (req.user.role !== "user" && req.user.role !== "seller") {
         return res.status(403).json({
             Message:"invalid user please get lost sir"
         })

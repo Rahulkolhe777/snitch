@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch server.js"
+    "dev": "bun --watch server.js",
+    "seed:products": "node scripts/seed-products.js"
   },
   "devDependencies": {
     "@types/bun": "latest"
